@@ -12,13 +12,15 @@ output:
 ## Setup
 ### Load packages
 
-```{r load-packages, message = FALSE}
+
+```r
 library(ggplot2)
 library(dplyr)
 ```
 
 ### Load data
-```{r load-data}
+
+```r
 load("brfss2013.RData")
 ```
 
@@ -120,7 +122,8 @@ Description of the dataset variables that are used in our analysis:
      * BLANK - Not asked or Missing
 
 At first subset only our variables of interest:
-```{r}
+
+```r
 brfss2013 <- brfss2013 %>% 
      select(genhlth, sleptim1, addepev2, veteran3, employ1, sex, income2)
 ```
@@ -129,7 +132,8 @@ Cause almost all of our variables are categorical we decided to use bar plots. N
 
 **Research question 1:**
 
-```{r}
+
+```r
 brfss2013 %>% 
      select(sleptim1, income2, genhlth) %>%
      filter(!is.na(genhlth) & !is.na(sleptim1) & !is.na(income2) & sleptim1 %in% 1:24) %>%
@@ -141,11 +145,14 @@ brfss2013 %>%
      scale_fill_discrete(name = "General Health")
 ```
 
+![](BRFSS_Analysis_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+
 We see that those participants who have normal daily sleep duration (about 7-8 hours of sleep) feel better than rest. And also participants with higher income have a better health than those with lower income.
 
 **Research question 2:**
 
-```{r}
+
+```r
 brfss2013 %>% 
      select(addepev2, veteran3, sex) %>%
      filter(addepev2 %in% c("Yes", "No") & veteran3 == "Yes") %>% 
@@ -156,11 +163,14 @@ brfss2013 %>%
      scale_fill_discrete(name = "Depression")
 ```
 
+![](BRFSS_Analysis_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+
 Nearly 20-25% of survey participants who are veterans have a depressive disorder or depression. And percentage of them is two times bigger among female veterans than male veterans. 
 
 **Research quesion 3:**
 
-```{r}
+
+```r
 brfss2013 %>%
      select(employ1, genhlth) %>%
      filter(!is.na(employ1) & !is.na(genhlth)) %>%
@@ -171,5 +181,7 @@ brfss2013 %>%
      labs(x = "Employment status", y = "Proportion", title = "Relationship between employment and health") +
      scale_fill_discrete(name = "General health")
 ```
+
+![](BRFSS_Analysis_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 As we can see in figure, employed participants have a better health statuses than unemployed ones.  
